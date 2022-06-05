@@ -1,0 +1,4 @@
+# use the public slim Perl docker, SSL not working and installation is a lot of work and increases the container size
+
+FROM perl:5.36-slim
+

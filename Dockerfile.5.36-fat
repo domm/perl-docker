@@ -1,0 +1,4 @@
+# use the public Perl docker. SSL can be installed, but the image is huge.
+
+FROM perl:5.36
+
