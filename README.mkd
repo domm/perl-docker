@@ -1,0 +1,5 @@
+# Dockerfile for Perl 5.36 based on Alpine
+
+With preinstalled SSL support.
+
+Read more [in this blog post](https://domm.plix.at/perl/2022_06_dockerfile_for_perl_5_36.html).
