@@ -1,0 +1,37 @@
+# perlapp-base will be common for all perl application build images
+FROM alpine
+
+RUN apk update && apk upgrade && apk add --no-cache curl tar make gcc build-base wget gnupg vim tree bash zlib zlib-dev openssl openssl-dev
+RUN mkdir -p /usr/src/perl
+
+WORKDIR /usr/src/perl
+
+RUN curl -SLO https://www.cpan.org/src/5.0/perl-5.36.0.tar.gz \
+    && tar --strip-components=1 -xaf perl-5.36.0.tar.gz -C /usr/src/perl \
+    && rm perl-5.36.0.tar.gz \
+    && ./Configure -des \
+        -Duse64bitall \
+        -Dcccdlflags='-fPIC' \
+        -Dcccdlflags='-fPIC' \
+        -Dccdlflags='-rdynamic' \
+        -Dlocincpth=' ' \
+        -Duselargefiles \
+        -Dusethreads \
+        -Duseshrplib \
+        -Dd_semctl_semun \
+        -Dusenm \
+        -Dprefix='/opt/perl' \
+    && make -j$(nproc) \
+    && make install \
+    && rm -fr /usr/src/perl
+
+WORKDIR /opt/perl
+ENV PATH="/opt/perl/bin:${PATH}"
+RUN cd /opt/perl
+
+RUN curl -o /tmp/cpm -sL --compressed https://git.io/cpm \
+    && chmod 755 /tmp/cpm \
+    && /tmp/cpm install -g App::cpm IO::Socket::SSL Cpanel::JSON::XS \
+    && rm -fr /root/.perl-cpm
+
+
