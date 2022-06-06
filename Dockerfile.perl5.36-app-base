@@ -24,15 +24,15 @@ RUN curl -SLO https://www.cpan.org/src/5.0/perl-5.36.0.tar.gz \
         -Dprefix='/opt/perl' \
     && make -j$(nproc) \
     && make install \
-    && rm -fr /usr/src/perl
+    && rm -fr /usr/src/perl /var/cache/apk
 
 WORKDIR /opt/perl
 ENV PATH="/opt/perl/bin:${PATH}"
-RUN cd /opt/perl
 
 RUN curl -o /tmp/cpm -sL --compressed https://git.io/cpm \
     && chmod 755 /tmp/cpm \
     && /tmp/cpm install -g App::cpm IO::Socket::SSL Cpanel::JSON::XS \
-    && rm -fr /root/.perl-cpm
+    && rm -fr /root/.perl-cpm /tmp/cpm
 
+RUN apk del zlib-dev openssl-dev
 
