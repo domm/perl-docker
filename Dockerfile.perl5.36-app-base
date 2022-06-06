@@ -1,9 +1,9 @@
 # perlapp-base will be common for all perl application build images
 FROM alpine
 
-RUN apk update && apk upgrade && apk add --no-cache curl tar make gcc build-base wget gnupg vim tree bash zlib zlib-dev openssl openssl-dev
-RUN mkdir -p /usr/src/perl
+RUN apk update && apk upgrade && apk add --no-cache curl tar make gcc build-base wget gnupg vim bash zlib zlib-dev openssl openssl-dev
 
+RUN mkdir -p /usr/src/perl
 WORKDIR /usr/src/perl
 
 RUN curl -SLO https://www.cpan.org/src/5.0/perl-5.36.0.tar.gz \
