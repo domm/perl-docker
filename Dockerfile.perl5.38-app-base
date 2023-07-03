@@ -6,9 +6,9 @@ RUN apk update && apk upgrade && apk add --no-cache curl tar make gcc build-base
 RUN mkdir -p /usr/src/perl
 WORKDIR /usr/src/perl
 
-RUN curl -SLO https://www.cpan.org/src/5.0/perl-5.38.0.tar.gz
-#RUN echo '213ef58089d2f2c972ea353517dc60ec3656f050dcc027666e118b508423e517 perl-5.38.0.tar.gz' | sha256sum -c perl-5.38.0.tar.gz
-RUN tar --strip-components=1 -xaf perl-5.38.0.tar.gz -C /usr/src/perl \
+RUN curl -SLO https://www.cpan.org/src/5.0/perl-5.38.0.tar.gz \
+    && echo '5c4dea06509959fedcccaada8d129518487399b7  perl-5.38.0.tar.gz' | sha1sum -c - \
+    && tar --strip-components=1 -xaf perl-5.38.0.tar.gz -C /usr/src/perl \
     && rm perl-5.38.0.tar.gz \
     && ./Configure -des \
         -Duse64bitall \
